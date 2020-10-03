@@ -16,13 +16,29 @@
 
 static std::FILE* kdebug_logfile = NULL;
 
+void _kdebug::init() {
+	kdebug_logfile = std::fopen("kisak-debug.log", "w");
+
+#ifdef _WIN32
+	/* Create a console to display stdout */
+	AllocConsole();
+	freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
+#endif
+}
+
+void _kdebug::shutdown() {
+	if (kdebug_logfile) {
+		std::fclose(kdebug_logfile);
+	}
+
+#ifdef _WIN32
+	FreeConsole();
+#endif
+}
+
 void _kdebug::log(bool fatal, const char* fmt, ...) {
 	if (!kdebug_logfile) {
-		kdebug_logfile = std::fopen("kisak-debug.log", "w");
-		if (!kdebug_logfile) {
-			/* All hope is lost */
-			return;
-		}
+		return;
 	}
 
 	/* Format argument list */
@@ -35,7 +51,7 @@ void _kdebug::log(bool fatal, const char* fmt, ...) {
 	std::fprintf(kdebug_logfile, "%s", msg_buf);
 	std::fflush(kdebug_logfile);
 
-	/* Let the OS deal with closing the file handle */
+	std::printf(msg_buf);
 
 #ifdef _WIN32
 	if (fatal) {
@@ -47,5 +63,7 @@ void _kdebug::log(bool fatal, const char* fmt, ...) {
 void _kdebug::debug_break() {
 #ifdef _WIN32
 	DebugBreak();
+#else
+	#error debug_break not defined
 #endif
 }

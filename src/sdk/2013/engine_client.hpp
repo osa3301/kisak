@@ -4,6 +4,6 @@
 
 #define VENGINE_CLIENT_INTERFACE_VERSION "VEngineClient013"
 
-namespace tf2 {
+namespace sdk {
 	class EngineClient;
 }

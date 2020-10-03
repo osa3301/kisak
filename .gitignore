@@ -6,3 +6,6 @@ out/
 
 # CMake output folder for everyone else
 [Bb]uild/
+
+# Config file
+src/kconfig.hpp

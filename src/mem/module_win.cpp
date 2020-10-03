@@ -1,4 +1,4 @@
-#include "mem/module.hpp"
+#include "module.hpp"
 
 #include <Windows.h>
 
@@ -13,18 +13,18 @@ static DWORD WINAPI unloader_func(LPVOID param) {
 	FreeLibraryAndExitThread(self, 0);
 }
 
-/* Find a loaded module */
-mem::Module mem::module_find(const char* name) {
-	HMODULE result = GetModuleHandle(name);
-	return mem::Module(result);
-}
 
-/* Get the address of an exported symbol */
-void* mem::Module::sym_addr(const char* symbol) {
-	return GetProcAddress((HMODULE)this->handle, symbol);
-}
-
-/* Special function to unload the calling code's module */
+/* Special function to unload the module for the calling code */
 void mem::unload_self() {
 	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)unloader_func, NULL, 0, NULL);
+}
+
+/* Locate a module in memory */
+mem::module mem::module_find(const char* name) {
+	return GetModuleHandle(name);
+}
+
+/* Locate the address of a symbol in a module */
+std::uintptr_t mem::module_sym_addr(module mod, const char* symbol) {
+	return (std::uintptr_t)GetProcAddress((HMODULE)mod, symbol);
 }

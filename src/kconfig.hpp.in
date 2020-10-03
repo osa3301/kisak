@@ -1,0 +1,13 @@
+#pragma once
+
+#cmakedefine KISAK_DEBUG
+#cmakedefine KISAK_AGGRESSIVE_LOGGING
+
+/* Target game as a string */
+#cmakedefine KISAK_GAME "@KISAK_GAME@"
+
+/* Team Fortress 2 */
+#cmakedefine KISAK_TF2
+
+/* OS */
+#cmakedefine KISAK_WIN32
