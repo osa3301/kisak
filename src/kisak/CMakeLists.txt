@@ -5,6 +5,8 @@ target_sources(kisak PRIVATE
 	"${CMAKE_CURRENT_LIST_DIR}/kdebug.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/gamelib.hpp"
 	"${CMAKE_CURRENT_LIST_DIR}/gamelib.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/iface.hpp"
+	"${CMAKE_CURRENT_LIST_DIR}/iface.cpp"
 )
 
 add_subdirectory("main")

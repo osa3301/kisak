@@ -1,18 +1,25 @@
 #pragma once
 
-#include <cstddef>
-
 namespace mem {
 
 	/* OS-agnostic handle to a module */
 	struct Module {
 		Module()
-			: handle(NULL) {}
+			: handle(nullptr) {}
 
 		Module(void* handle)
 			: handle(handle) {}
 
-		inline bool is_valid() { return handle != NULL; }
+		inline bool is_valid() { return handle != nullptr; }
+
+		/* Get the address of an exported symbol */
+		void* sym_addr(const char* symbol);
+		
+		/* Get the pointer to an exported symbol */
+		template <typename T>
+		T sym_ptr(const char* symbol) {
+			return (T)sym_addr(symbol);
+		}
 
 		void* handle;
 	};

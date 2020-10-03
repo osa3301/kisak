@@ -19,9 +19,16 @@ endif()
 add_library(kisak-mem STATIC)
 add_subdirectory("${KISAK_SRC_DIR}/mem")
 
+# SDK library
+add_library(kisak-sdk INTERFACE)
+target_include_directories(kisak-sdk INTERFACE
+	"${KISAK_SRC_DIR}/sdk/include"
+)
+
 # Kisak shared library
 add_library(kisak SHARED)
 add_subdirectory("${KISAK_SRC_DIR}/kisak")
 target_link_libraries(kisak PRIVATE
 	kisak-mem
+	kisak-sdk
 )
