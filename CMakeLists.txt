@@ -4,6 +4,13 @@ project(kisak)
 
 set(KISAK_SRC_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
+# TODO: Make sure release binaries are stripped and display a warning for debug builds
+
+# GCC: Special flags to build 32-bit
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+endif()
+
 # Windows DLL injector
 if(WIN32)
 	set(KISAK_BUILD_INJECTOR TRUE CACHE BOOL "Build DLL injector")
