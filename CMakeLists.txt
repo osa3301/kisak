@@ -41,7 +41,7 @@ if(WIN32)
 	if(KISAK_BUILD_INJECTOR)
 		add_executable(injector
 			"${KISAK_SRC_DIR}/tool/injector.c"
-		)
+		 "src/sdk/2013/button_code.hpp")
 	endif()
 endif()
 

@@ -9,7 +9,7 @@ void mem::unload_self() {
 }
 
 mem::Module::Module()
-	: handle(nullptr) {}
+	: handle(nullptr), file_base_addr(0) {}
 
 mem::Module::Module(const char* path) {
 	/* Even though RTLD_NOLOAD is specified, glibc's internal */

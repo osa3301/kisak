@@ -1,6 +1,8 @@
 target_sources(kisak PRIVATE
 	"${CMAKE_CURRENT_LIST_DIR}/graphics.hpp"
 	"${CMAKE_CURRENT_LIST_DIR}/graphics.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/imgui_impl_source.hpp"
+	"${CMAKE_CURRENT_LIST_DIR}/imgui_impl_source.cpp"
 )
 
 if(WIN32)
@@ -14,3 +16,5 @@ if(UNIX)
 		"${CMAKE_CURRENT_LIST_DIR}/graphics_linux.cpp"
 	)
 endif()
+
+add_subdirectory("imgui")

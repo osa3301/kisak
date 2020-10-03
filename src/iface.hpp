@@ -7,4 +7,5 @@ namespace iface {
 	void find_all();
 
 	extern sdk::EngineClient* engine;
+	extern sdk::InputSystem* input;
 }

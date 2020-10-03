@@ -18,9 +18,17 @@ namespace mem {
 
 		/* Get the base address of the file in memory */
 		inline std::uintptr_t file_base() { return this->file_base_addr; }
+
+		/* Get the address of a code pattern */
+		std::uintptr_t scan(const char* code);
 	private:
 		void* handle;
 		std::uintptr_t file_base_addr;
+
+		struct code_info {
+			std::uintptr_t start;
+			std::uintptr_t end;
+		} code;
 	};
 
 	/* Special function to unload the module for the calling code */

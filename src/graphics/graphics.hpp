@@ -2,6 +2,6 @@
 
 namespace graphics {
 
-	void init();
+	void start();
 
 }

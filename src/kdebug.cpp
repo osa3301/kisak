@@ -55,7 +55,7 @@ void _kdebug::log(bool fatal, const char* fmt, ...) {
 
 #ifdef _WIN32
 	if (fatal) {
-		MessageBox(NULL, "Kisak - Fatal Error", msg_buf, MB_OK);
+		MessageBox(NULL, msg_buf, "Kisak - Fatal Error", MB_OK);
 	}
 #endif
 }

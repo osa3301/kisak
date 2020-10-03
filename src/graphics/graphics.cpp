@@ -1,7 +1,10 @@
 #include "graphics.hpp"
 
-extern void graphics_init_platform();
+#include "imgui/imgui.h"
+#include "imgui_impl_source.hpp"
 
-void graphics::init() {
-	graphics_init_platform();
+extern void graphics_start_platform();
+
+void graphics::start() {
+	graphics_start_platform();
 }
