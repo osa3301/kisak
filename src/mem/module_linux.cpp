@@ -1,6 +1,7 @@
 #include "mem/module.hpp"
 
 #include <dlfcn.h>
+#include <pthread.h>
 
 /* Find a loaded module */
 mem::Module mem::module_find(const char* name) {
@@ -22,4 +23,22 @@ void* mem::Module::sym_addr(const char* symbol) {
 
 /* Special function to unload the calling code's module */
 void mem::unload_self() {
+	/* Credit to Heep042 on UnknownCheats for popularizing this method */
+
+	static int cool_data_not_on_stack = 0xB15B00B5;
+
+	Dl_info info;
+	if (!dladdr(&cool_data_not_on_stack, &info) || !info.dli_fname) {
+		return;
+	}
+
+	void* handle = dlopen(info.dli_fname, RTLD_LAZY | RTLD_NOLOAD);
+	if (!handle) {
+		return;
+	}
+
+	dlclose(handle);
+
+	pthread_t thread;
+	pthread_create(&thread, NULL, (void*(*)(void*))dlclose, handle);
 }
