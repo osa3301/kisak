@@ -1,6 +1,10 @@
 #include "graphics.hpp"
 #include "../kdebug.hpp"
 #include "../gamemodule.hpp"
+#include "../ui.hpp"
+
+#include "imgui/imgui_impl_opengl2.h"
+#include "imgui_impl_source.hpp"
 
 #include <memory>
 
@@ -55,7 +59,37 @@ namespace hooks {
 	/* Called on window update to swap the front and back GL buffers */
 	static void SDL_GL_SwapWindow(SDL_Window* window) {
 
-		K_LOG("SDL_GL_SwapWindow\n");
+		static bool initialized = false;
+		if (!initialized) {
+			initialized = true;
+
+			game_context = SDL_GL_GetCurrentContext();
+			kisak_context = SDL_GL_CreateContext(window);
+
+			SDL_GL_MakeCurrent(window, kisak_context);
+
+			IMGUI_CHECKVERSION();
+			ImGui::CreateContext();
+
+			ImGui_ImplSource_Init();
+			ImGui_ImplOpenGL2_Init();
+
+			ui_init();
+		}
+
+		SDL_GL_MakeCurrent(window, kisak_context);
+
+		ImGui_ImplOpenGL2_NewFrame();
+		ImGui_ImplSource_NewFrame();
+		ImGui::NewFrame();
+
+		ui_draw();
+
+		ImGui::EndFrame();
+		ImGui::Render();
+		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+		SDL_GL_MakeCurrent(window, game_context);
 
 		/* Call the original function */
 		static auto original = swap_window_hook->get_original();
@@ -64,7 +98,7 @@ namespace hooks {
 
 }
 
-void graphics_init_platform() {
+void graphics_start_platform() {
 	/* Load SDL functions */
 	SDL_GL_GetCurrentContext = (typeof(SDL_GL_GetCurrentContext))gamemodule::sdl.sym_addr("SDL_GL_GetCurrentContext");
 	SDL_GL_CreateContext     = (typeof(SDL_GL_CreateContext))gamemodule::sdl.sym_addr("SDL_GL_CreateContext");

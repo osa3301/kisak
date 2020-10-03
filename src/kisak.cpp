@@ -13,13 +13,6 @@ void kisak_install() {
 	gamemodule::find_all();
 	iface::find_all();
 	graphics::start();
-
-	int width, height;
-	iface::engine->get_screen_size(width, height);
-	K_LOG("Screen size: (%d, %d)\n", width, height);
-
-	K_LOG("Calling mem::unload_self()\n");
-	/* mem::unload_self(); */
 }
 
 /* Shut down the cheat */

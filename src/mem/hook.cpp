@@ -1,6 +1,8 @@
 #include "hook.hpp"
 #include "../kdebug.hpp"
 
+#include <cstring>
+
 mem::VTableHook::VTableHook(mem::vtable* cxx_class)
 	: cxx_class(cxx_class), real_table(*cxx_class), num_entries(0) {
 
