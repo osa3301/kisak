@@ -1,9 +1,0 @@
-{
-  "modules": [
-    {
-      "name": "engine",
-      "path_windows": "engine.dll",
-      "path_linux":   "./bin/engine.so"
-    }
-  ]
-}
