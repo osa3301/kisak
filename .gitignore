@@ -1,0 +1,8 @@
+# All things Visual Studio
+.vs*
+
+# Visual Studio CMake output folder
+out/
+
+# CMake output folder for everyone else
+[Bb]uild/
