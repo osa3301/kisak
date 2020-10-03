@@ -11,3 +11,4 @@ target_sources(kisak PRIVATE
 
 add_subdirectory("main")
 add_subdirectory("mem")
+add_subdirectory("graphics")

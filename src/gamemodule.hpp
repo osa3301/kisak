@@ -5,6 +5,7 @@
 namespace gamemodule {
 	void find_all();
 
-	extern mem::module engine;
-	extern mem::module client;
+	extern mem::Module engine;
+	extern mem::Module client;
+	extern mem::Module sdl;
 }

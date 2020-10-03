@@ -3,6 +3,7 @@
 #include "kconfig.hpp"
 #include "gamemodule.hpp"
 #include "iface.hpp"
+#include "graphics/graphics.hpp"
 
 /* Start the cheat */
 void kisak_install() {
@@ -14,6 +15,8 @@ void kisak_install() {
 
 	K_LOG("Calling mem::unload_self()\n");
 	mem::unload_self();
+
+	graphics::init();
 }
 
 /* Shut down the cheat */

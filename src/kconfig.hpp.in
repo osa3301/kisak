@@ -11,3 +11,4 @@
 
 /* OS */
 #cmakedefine KISAK_WIN32
+#cmakedefine KISAK_LINUX

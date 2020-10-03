@@ -10,8 +10,8 @@
 
 sdk::EngineClient* iface::engine = nullptr;
 
-static sdk::create_iface_fn find_factory(mem::module& mod) {
-	return (sdk::create_iface_fn)mem::module_sym_addr(mod, CREATEINTERFACE_PROCNAME);
+static sdk::create_iface_fn find_factory(mem::Module& mod) {
+	return (sdk::create_iface_fn)mod.sym_addr(CREATEINTERFACE_PROCNAME);
 }
 
 /* Find all required interfaces */

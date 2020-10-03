@@ -8,12 +8,15 @@
 #define K_MODULE_ASSERT(x) K_ASSERT(x)
 #endif
 
-mem::module gamemodule::engine;
-mem::module gamemodule::client;
+mem::Module gamemodule::engine;
+mem::Module gamemodule::client;
+mem::Module gamemodule::sdl;
 
 void gamemodule::find_all() {
-	engine = mem::module_find(GD_ENGINE_PATH);
-	K_MODULE_ASSERT(engine);
-	client = mem::module_find(GD_CLIENT_PATH);
-	K_MODULE_ASSERT(client);
+	engine = mem::Module(GD_ENGINE_PATH);
+	K_MODULE_ASSERT(engine.is_valid());
+	client = mem::Module(GD_CLIENT_PATH);
+	K_MODULE_ASSERT(client.is_valid());
+	sdl = mem::Module(GD_SDL_PATH);
+	K_MODULE_ASSERT(sdl.is_valid());
 }

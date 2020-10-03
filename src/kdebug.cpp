@@ -51,7 +51,7 @@ void _kdebug::log(bool fatal, const char* fmt, ...) {
 	std::fprintf(kdebug_logfile, "%s", msg_buf);
 	std::fflush(kdebug_logfile);
 
-	std::printf(msg_buf);
+	std::printf("%s", msg_buf);
 
 #ifdef _WIN32
 	if (fatal) {
@@ -63,7 +63,8 @@ void _kdebug::log(bool fatal, const char* fmt, ...) {
 void _kdebug::debug_break() {
 #ifdef _WIN32
 	DebugBreak();
-#else
-	#error debug_break not defined
+#endif
+#ifdef __linux__
+	__builtin_trap();
 #endif
 }
