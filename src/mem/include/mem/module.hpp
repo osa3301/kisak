@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace mem {
 
 	/* OS-agnostic handle to a module */
@@ -7,13 +9,12 @@ namespace mem {
 		Module()
 			: handle(nullptr) {}
 
-		Module(void* handle)
-			: handle(handle) {}
+		Module(void* handle);
 
 		inline bool is_valid() { return handle != nullptr; }
 
 		/* Get the address of an exported symbol */
-		void* sym_addr(const char* symbol);
+		std::uintptr_t sym_addr(const char* symbol);
 		
 		/* Get the pointer to an exported symbol */
 		template <typename T>
@@ -22,6 +23,7 @@ namespace mem {
 		}
 
 		void* handle;
+		std::uintptr_t file_base;
 	};
 
 	/* Find a loaded module */

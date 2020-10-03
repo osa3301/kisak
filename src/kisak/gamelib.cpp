@@ -2,3 +2,4 @@
 
 mem::Module gamelibs::engine;
 mem::Module gamelibs::client;
+mem::Module gamelibs::sdl;

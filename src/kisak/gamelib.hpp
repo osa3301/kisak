@@ -7,4 +7,5 @@ namespace gamelibs {
 
 	extern mem::Module engine;
 	extern mem::Module client;
+	extern mem::Module sdl;
 }

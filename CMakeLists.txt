@@ -32,10 +32,15 @@ target_include_directories(kisak-sdk INTERFACE
 	"${KISAK_SRC_DIR}/sdk/include"
 )
 
+# ImGui
+add_library(kisak-imgui STATIC)
+add_subdirectory("${KISAK_SRC_DIR}/imgui")
+
 # Kisak shared library
 add_library(kisak SHARED)
 add_subdirectory("${KISAK_SRC_DIR}/kisak")
 target_link_libraries(kisak PRIVATE
 	kisak-mem
 	kisak-sdk
+	kisak-imgui
 )

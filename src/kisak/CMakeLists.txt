@@ -10,6 +10,7 @@ target_sources(kisak PRIVATE
 )
 
 add_subdirectory("main")
+add_subdirectory("graphics")
 
 if(WIN32)
 	add_subdirectory("windows")

@@ -2,6 +2,7 @@
 
 #include <dlfcn.h>
 #include <pthread.h>
+#include <link.h>
 
 /* Find a loaded module */
 mem::Module mem::module_find(const char* name) {
@@ -16,9 +17,15 @@ mem::Module mem::module_find(const char* name) {
 	return mem::Module(result);
 }
 
+mem::Module::Module(void* handle)
+	: handle(handle) {
+
+	file_base = ((link_map*)handle)->l_addr;
+}
+
 /* Get the address of an exported symbol */
-void* mem::Module::sym_addr(const char* symbol) {
-	return dlsym(this->handle, symbol);
+std::uintptr_t mem::Module::sym_addr(const char* symbol) {
+	return (std::uintptr_t)dlsym(this->handle, symbol);
 }
 
 /* Special function to unload the calling code's module */

@@ -2,6 +2,7 @@
 #include "kdebug.hpp"
 #include "gamelib.hpp"
 #include "iface.hpp"
+#include "graphics/graphics.hpp"
 
 #include "mem/module.hpp"
 
@@ -15,12 +16,16 @@ void kisak_install() {
 	iface::find_all();
 	K_LOG("Found all game interfaces\n");
 
-	K_LOG("engine lib: %p\n", gamelibs::engine.handle);
-	K_LOG("client lib: %p\n", gamelibs::client.handle);
+	K_LOG("engine lib: %p @ %p\n", gamelibs::engine.handle, gamelibs::engine.file_base);
+	K_LOG("client lib: %p @ %p\n", gamelibs::client.handle, gamelibs::client.file_base);
+	K_LOG("sdl lib:    %p @ %p\n", gamelibs::sdl.handle, gamelibs::sdl.file_base);
 
 	K_LOG("engine iface: %p\n", (void*)iface::engine);
 
-	mem::unload_self();
+	graphics_init();
+	K_LOG("Graphics initialized\n");
+
+	/* mem::unload_self(); */
 }
 
 /* Shut down the cheat */
