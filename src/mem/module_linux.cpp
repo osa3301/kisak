@@ -27,18 +27,18 @@ void mem::unload_self() {
 
 	static int cool_data_not_on_stack = 0xB15B00B5;
 
+	/* Get shared address info for a pointer in the calling library  */
 	Dl_info info;
 	if (!dladdr(&cool_data_not_on_stack, &info) || !info.dli_fname) {
 		return;
 	}
 
-	void* handle = dlopen(info.dli_fname, RTLD_LAZY | RTLD_NOLOAD);
-	if (!handle) {
+	mem::Module this_module = mem::module_find(info.dli_fname);
+	if (!this_module.is_valid()) {
 		return;
 	}
 
-	dlclose(handle);
-
+	/* Create a thread at "dlclose" with the handle as the argument */
 	pthread_t thread;
-	pthread_create(&thread, NULL, (void*(*)(void*))dlclose, handle);
+	pthread_create(&thread, NULL, (void*(*)(void*))dlclose, this_module.handle);
 }
