@@ -3,8 +3,8 @@
 #include "imgui/imgui.h"
 #include "imgui_impl_source.hpp"
 
-extern void graphics_start_platform();
+extern void graphics_hook_platform();
 
-void graphics::start() {
-	graphics_start_platform();
+void graphics::hook() {
+	graphics_hook_platform();
 }

@@ -4,6 +4,6 @@
 
 namespace graphics {
 
-	void start();
+	void hook();
 
 }

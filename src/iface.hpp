@@ -6,6 +6,6 @@ namespace iface {
 	/* Find all required interfaces */
 	void find_all();
 
-	extern sdk::EngineClient* engine;
-	extern sdk::InputSystem* input;
+	extern sdk::EngineClient*	engine;
+	extern sdk::InputSystem*	input;
 }

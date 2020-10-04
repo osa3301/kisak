@@ -98,7 +98,7 @@ namespace hooks {
 
 }
 
-void graphics_start_platform() {
+void graphics_hook_platform() {
 	/* Load SDL functions */
 	SDL_GL_GetCurrentContext = (typeof(SDL_GL_GetCurrentContext))gamemodule::sdl.sym_addr("SDL_GL_GetCurrentContext");
 	SDL_GL_CreateContext     = (typeof(SDL_GL_CreateContext))gamemodule::sdl.sym_addr("SDL_GL_CreateContext");

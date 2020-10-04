@@ -3,6 +3,7 @@
 #include "../gamemodule.hpp"
 #include "../gamedata.hpp"
 #include "../mem/hook.hpp"
+#include "../cxxutil.hpp"
 
 #include "imgui/imgui_impl_dx9.h"
 #include "imgui_impl_source.hpp"
@@ -18,16 +19,13 @@ namespace hooks {
 
 	/* Called to display the back buffer */
 	static HRESULT __stdcall present(IDirect3DDevice9* device, const RECT* src, const RECT* dest, HWND override, const RGNDATA* dirty) {
-		static bool initialized = false;
-		if (!initialized) {
-			initialized = true;
-
+		run_static {
 			IMGUI_CHECKVERSION();
 			ImGui::CreateContext();
 
 			ImGui_ImplSource_Init();
 			ImGui_ImplDX9_Init(device);
-		}
+		};
 
 		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplSource_NewFrame();
@@ -46,7 +44,7 @@ namespace hooks {
 
 }
 
-void graphics_start_platform() {
+void graphics_hook_platform() {
 	/* d3d9 device: FF 75 FC 8B 0D ? ? ? ? in shaderapidx9.dll */
 	auto device_ptr = gamemodule::shaderapi.scan(GD_PAT_D3DDEVICE);
 	K_ASSERT(device_ptr);

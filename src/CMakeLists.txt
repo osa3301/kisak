@@ -11,6 +11,10 @@ target_sources(kisak PRIVATE
 	"${CMAKE_CURRENT_LIST_DIR}/ui.cpp"
 )
 
+target_include_directories(kisak PRIVATE
+	"${CMAKE_CURRENT_LIST_DIR}"
+)
+
 add_subdirectory("main")
 add_subdirectory("mem")
 add_subdirectory("graphics")

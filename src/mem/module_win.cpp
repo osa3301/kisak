@@ -1,4 +1,5 @@
 #include "module.hpp"
+#include "kdebug.hpp"
 
 #include <Windows.h>
 
@@ -33,6 +34,9 @@ mem::Module::Module(const char* path) {
 	PIMAGE_NT_HEADERS nt_header  = (PIMAGE_NT_HEADERS)(this->file_base_addr + dos_header->e_lfanew);
 	this->code.start = this->file_base_addr + nt_header->OptionalHeader.BaseOfCode;
 	this->code.end   = this->code.start + nt_header->OptionalHeader.SizeOfCode;
+#ifdef KISAK_AGGRESSIVE_LOGGING
+	K_LOG("[Module] Found module %s @ %p (code section is %p-%p)\n", path, file_base_addr, code.start, code.end);
+#endif
 }
 
 /* Locate the address of a symbol in a module */

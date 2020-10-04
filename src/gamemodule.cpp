@@ -3,9 +3,9 @@
 #include "gamedata.hpp"
 
 #ifdef KISAK_AGGRESSIVE_LOGGING
-#define K_MODULE_ASSERT(x) K_LOG("%s loaded\t@ %p\n", #x, x.file_base()); K_ASSERT(x.is_valid())
+	#define K_MODULE_ASSERT(x) K_LOG("[GameModule] %s loaded \t@ %p\n", #x, x.file_base()); K_ASSERT(x.is_valid())
 #else
-#define K_MODULE_ASSERT(x) K_ASSERT(x)
+	#define K_MODULE_ASSERT(x) K_ASSERT(x)
 #endif
 
 mem::Module gamemodule::engine;

@@ -3,13 +3,13 @@
 #include "kdebug.hpp"
 
 #ifdef KISAK_AGGRESSIVE_LOGGING
-#define K_IFACE_ASSERT(x) K_LOG("iface %s @ %p\n", #x, x); K_ASSERT(x)
+	#define K_IFACE_ASSERT(x) K_LOG("[Iface] Found %s \t@ %p\n", #x, x); K_ASSERT(x)
 #else
-#define K_IFACE_ASSERT(x) K_ASSERT(x)
+	#define K_IFACE_ASSERT(x) K_ASSERT(x)
 #endif
 
-sdk::EngineClient* iface::engine = nullptr;
-sdk::InputSystem* iface::input = nullptr;
+sdk::EngineClient*	iface::engine = nullptr;
+sdk::InputSystem*	iface::input = nullptr;
 
 static sdk::create_iface_fn find_factory(mem::Module& mod) {
 	return (sdk::create_iface_fn)mod.sym_addr(CREATEINTERFACE_PROCNAME);

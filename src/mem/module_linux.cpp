@@ -1,4 +1,5 @@
 #include "module.hpp"
+#include "kdebug.hpp"
 
 #include <dlfcn.h>
 #include <link.h>
@@ -24,6 +25,10 @@ mem::Module::Module(const char* path) {
 	dlclose(this->handle);
 
 	this->file_base_addr = ((link_map*)this->handle)->l_addr;
+
+#ifdef KISAK_AGGRESSIVE_LOGGING
+	K_LOG("[Module] Found module %s @ %p\n", path, handle);
+#endif
 }
 
 /* Find the address of an exported symbol */

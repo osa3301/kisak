@@ -1,8 +1,15 @@
 #pragma once
 
 #include "vtable.hpp"
+#include "../kconfig.hpp"
 
 #include <memory>
+
+#ifdef KISAK_WIN32
+	#define VHOOK_DECL(class_type, name, ...) __fastcall name(class_type* _this, __VA_ARGS__)
+#else
+	#error VHOOK_DECL not defined
+#endif
 
 namespace mem {
 

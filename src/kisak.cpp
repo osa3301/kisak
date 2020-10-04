@@ -12,7 +12,7 @@ void kisak_install() {
 
 	gamemodule::find_all();
 	iface::find_all();
-	graphics::start();
+	graphics::hook();
 }
 
 /* Shut down the cheat */

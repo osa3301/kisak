@@ -1,5 +1,5 @@
 #include "module.hpp"
-#include "../kdebug.hpp"
+#include "kdebug.hpp"
 
 template <typename T>
 static bool in_range(T x, T a, T b) {
@@ -55,6 +55,6 @@ std::uintptr_t mem::Module::scan(const char* code) {
 		}
 	}
 
-	K_LOG_FATAL("Could not find code pattern %s\n", code);
+	K_LOG_FATAL("[Module] Could not find code pattern %s\n", code);
 	return 0;
 }
