@@ -1,7 +1,7 @@
 #include "graphics.hpp"
-#include "../kdebug.hpp"
-#include "../gamemodule.hpp"
-#include "../ui.hpp"
+#include "kdebug.hpp"
+#include "gamemodule.hpp"
+#include "ui.hpp"
 
 #include "imgui/imgui_impl_opengl2.h"
 #include "imgui_impl_source.hpp"

@@ -1,7 +1,7 @@
 #include "imgui_impl_source.hpp"
 #include "imgui/imgui.h"
-#include "../iface.hpp"
-#include "../kdebug.hpp"
+#include "iface.hpp"
+#include "kdebug.hpp"
 
 void ImGui_ImplSource_Init() {
 	ImGuiIO& io = ImGui::GetIO();

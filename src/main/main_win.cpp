@@ -1,4 +1,4 @@
-#include "../kisak.hpp"
+#include "kisak.hpp"
 
 #include <thread>
 

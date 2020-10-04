@@ -1,7 +1,7 @@
 #pragma once
 
 #include "vtable.hpp"
-#include "../kconfig.hpp"
+#include "kconfig.hpp"
 
 #include <memory>
 
