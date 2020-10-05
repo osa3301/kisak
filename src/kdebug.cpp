@@ -27,9 +27,14 @@ void _kdebug::init() {
 }
 
 void _kdebug::shutdown() {
+	/* It's better to just let the OS take care of this.         */
+	/* This way, heap-allocated classes can safely use KS_ASSERT */
+	/* in their destructors.                                     */
+#if 0
 	if (kdebug_logfile) {
 		std::fclose(kdebug_logfile);
 	}
+#endif
 
 #ifdef _WIN32
 	FreeConsole();

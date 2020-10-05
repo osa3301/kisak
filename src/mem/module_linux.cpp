@@ -21,7 +21,7 @@ mem::Module::Module(const char* path) {
 	}
 
 	/* If we don't do this, we will run into issues   */
-	/* unloading later. */
+	/* unloading later.                               */
 	dlclose(this->handle);
 
 	this->file_base_addr = ((link_map*)this->handle)->l_addr;

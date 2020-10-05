@@ -4,6 +4,7 @@
 #include "gamedata.hpp"
 #include "mem/hook.hpp"
 #include "cxxutil.hpp"
+#include "ui.hpp"
 
 #include "imgui/imgui_impl_dx9.h"
 #include "imgui_impl_source.hpp"
@@ -25,13 +26,15 @@ namespace hooks {
 
 			ImGui_ImplSource_Init();
 			ImGui_ImplDX9_Init(device);
+
+			ui_init();
 		};
 
 		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplSource_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::ShowDemoWindow();
+		ui_draw();
 
 		ImGui::EndFrame();
 		ImGui::Render();
