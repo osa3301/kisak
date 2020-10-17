@@ -1,44 +1,37 @@
-#include "mem/module.hpp"
+#include "module.hpp"
+#include "kdebug.hpp"
 
 #include <dlfcn.h>
-#include <pthread.h>
+#include <link.h>
 
-/* Find a loaded module */
-mem::Module mem::module_find(const char* name) {
-	/* Even though RTLD_NOLOAD is specified in this call,            */
-	/* glibc's internal reference counter will still be incremented. */
-	void* result = dlopen(name, RTLD_LAZY | RTLD_NOLOAD);
-	if (result) {
-		/* Decrement reference counter. If we don't do this, there */
-		/* will be issues with unloading.                          */
-		dlclose(result);
-	}
-	return mem::Module(result);
-}
-
-/* Get the address of an exported symbol */
-void* mem::Module::sym_addr(const char* symbol) {
-	return dlsym(this->handle, symbol);
-}
-
-/* Special function to unload the calling code's module */
+/* Special function to unload the module for the calling code */
 void mem::unload_self() {
-	/* Credit to Heep042 on UnknownCheats for popularizing this method */
+/*	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)unloader_func, NULL, 0, NULL); */
+}
 
-	static int cool_data_not_on_stack = 0xB15B00B5;
+mem::Module::Module()
+	: handle(nullptr), file_base_addr(0) {}
 
-	/* Get shared address info for a pointer in the calling library  */
-	Dl_info info;
-	if (!dladdr(&cool_data_not_on_stack, &info) || !info.dli_fname) {
+mem::Module::Module(const char* path) {
+	/* Even though RTLD_NOLOAD is specified, glibc's internal */
+	/* reference counter is still incremented by this call.   */
+	this->handle = dlopen(path, RTLD_LAZY | RTLD_NOLOAD);
+	if (!this->is_valid()) {
 		return;
 	}
 
-	mem::Module this_module = mem::module_find(info.dli_fname);
-	if (!this_module.is_valid()) {
-		return;
-	}
+	/* If we don't do this, we will run into issues   */
+	/* unloading later.                               */
+	dlclose(this->handle);
 
-	/* Create a thread at "dlclose" with the handle as the argument */
-	pthread_t thread;
-	pthread_create(&thread, NULL, (void*(*)(void*))dlclose, this_module.handle);
+	this->file_base_addr = ((link_map*)this->handle)->l_addr;
+
+#ifdef KISAK_AGGRESSIVE_LOGGING
+	K_LOG("[Module] Found module %s @ %p\n", path, handle);
+#endif
+}
+
+/* Find the address of an exported symbol */
+std::uintptr_t mem::Module::sym_addr(const char* sym) {
+	return (std::uintptr_t)dlsym(this->handle, sym);
 }

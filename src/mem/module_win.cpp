@@ -1,4 +1,5 @@
-#include "mem/module.hpp"
+#include "module.hpp"
+#include "kdebug.hpp"
 
 #include <Windows.h>
 
@@ -13,18 +14,32 @@ static DWORD WINAPI unloader_func(LPVOID param) {
 	FreeLibraryAndExitThread(self, 0);
 }
 
-/* Find a loaded module */
-mem::Module mem::module_find(const char* name) {
-	HMODULE result = GetModuleHandle(name);
-	return mem::Module(result);
-}
 
-/* Get the address of an exported symbol */
-void* mem::Module::sym_addr(const char* symbol) {
-	return GetProcAddress((HMODULE)this->handle, symbol);
-}
-
-/* Special function to unload the calling code's module */
+/* Special function to unload the module for the calling code */
 void mem::unload_self() {
 	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)unloader_func, NULL, 0, NULL);
+}
+
+mem::Module::Module()
+	: handle(nullptr), file_base_addr(0), code({}) {}
+
+
+/* Locate a module in memory */
+mem::Module::Module(const char* path) {
+	this->handle = GetModuleHandle(path);
+	this->file_base_addr = (std::uintptr_t)this->handle;
+
+	/* The DOS header is right at the beginning of the PE file */
+	PIMAGE_DOS_HEADER dos_header = (PIMAGE_DOS_HEADER)this->handle;
+	PIMAGE_NT_HEADERS nt_header  = (PIMAGE_NT_HEADERS)(this->file_base_addr + dos_header->e_lfanew);
+	this->code.start = this->file_base_addr + nt_header->OptionalHeader.BaseOfCode;
+	this->code.end   = this->code.start + nt_header->OptionalHeader.SizeOfCode;
+#ifdef KISAK_AGGRESSIVE_LOGGING
+	K_LOG("[Module] Found module %s @ %p (code section is %p-%p)\n", path, file_base_addr, code.start, code.end);
+#endif
+}
+
+/* Locate the address of a symbol in a module */
+std::uintptr_t mem::Module::sym_addr(const char* sym) {
+	return (std::uintptr_t)GetProcAddress((HMODULE)this->handle, sym);
 }

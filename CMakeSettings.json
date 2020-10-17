@@ -22,7 +22,13 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x86" ],
-      "variables": []
+      "variables": [
+        {
+          "name": "KISAK_GAME",
+          "value": "Team Fortress 2",
+          "type": "STRING"
+        }
+      ]
     }
   ]
 }
